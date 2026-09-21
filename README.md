@@ -1,2 +1,74 @@
 # fuzzy_k-mer_counter
+
 Counts mers with possible "N" characters from fasta files.
+
+## Usage
+
+Counts number of occurrences of ${ACGTN}^k$ -mers in fasta file(s).
+Reads fasta file paths and mers from parameters, batch files
+or standard input (if no paths are given) for piping.
+
+Usage: `fkm_count [fasta path] [options] [mers ...]`
+
+| Parameter | Description |
+|-----------|-------------|
+| `fasta_file` | Path to fasta file (possibly compressed). Needs to be placed before any mer parameters. |
+| `mers ...` | List of mers to search for. |
+| `-b <file_path>` | Reads file containing one `fasta_file` and at least one `mer` per line. Overrides `fasta_file` and `mers`. |
+| `-r` | Do not include reverse complements for non-palindromic mers. |
+| `-s` | Report at most one match per fasta record. |
+| `-t N` | Set the maximum number of threads. Only runs multithreaded on batch jobs. |
+| `-p <path>` | Prefix path to add to (each) `fasta_file`. |
+| `-h`| Display this message and exit. |
+
+## Example
+
+```bash
+$ fkm_count -p ex_seq/ -b test.txt
+```
+
+With `test.txt`:
+
+```
+BARHL2_TCCAGT40NGAC_AI_1.fastq AATTGNNNNNNNNNNNNNTAAACG TAATTGNNNNNNNNNNTGTAA AATTACNNNNNNNNNNNNNNNTTAAA AAAGCNNNNNNNNNNCGTTTA ...
+BARHL2_TCCAGT40NGAC_AI_3.fastq AATTGNNNNNNNNNNNNNTAAACG TAATTGNNNNNNNNNNTGTAA AATTACNNNNNNNNNNNNNNNTTAAA AAAGCNNNNNNNNNNCGTTTA ...
+```
+
+Will count the given mers from `ex_seq/BARHL2_TCCAGT40NGAC_AI_1.fastq` and `ex_seq/BARHL2_TCCAGT40NGAC_AI_3.fastq` in parallel.
+
+## Building
+
+Requires a modern C++ compiler (tested with GCC) and zlib.
+
+### Conda
+
+```bash
+conda install -c conda-forge -n base conda-build
+conda build recipe
+
+# then, in a fresh environment or after activation:
+conda install --use-local fuzzy-k-mer-counter
+
+# run the installed binary
+fkm_count -h
+```
+
+If you prefer to build from source into a local conda env, the equivalent pattern is:
+
+```bash
+conda create -n fkm python -y
+conda activate fkm
+conda install -c conda-forge cmake make zlib llvm-openmp -y
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel
+./build/fkm_count -h
+```
+
+### Native linux development
+
+```bash
+make count
+./count -h
+```
+
+This uses the project’s simple Makefile-based workflow for local development and debugging.

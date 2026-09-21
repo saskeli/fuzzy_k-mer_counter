@@ -1,0 +1,3 @@
+[submodule "deps/seqan3"]
+	path = deps/seqan3
+	url = https://github.com/seqan/seqan3.git

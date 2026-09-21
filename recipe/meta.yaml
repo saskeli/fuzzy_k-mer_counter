@@ -1,0 +1,25 @@
+package:
+  name: fuzzy-k-mer-counter
+  version: "0.1.0"
+
+source:
+  path: ..
+
+build:
+  script: bash build.sh
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+    - llvm-openmp
+  host:
+    - zlib
+    - llvm-openmp
+  run:
+    - zlib
+    - llvm-openmp
+
+about:
+  license: MIT
+  summary: Counts k-mers with ambiguous bases from FASTA files.
