@@ -38,25 +38,14 @@ Will count the given mers from `ex_seq/BARHL2_TCCAGT40NGAC_AI_1.fastq` and `ex_s
 
 ## Building
 
-Requires a modern C++ compiler (tested with GCC) and zlib.
+Requires a modern C++ compiler (tested with GCC) and `zlib`.
 
 ### Conda
 
 ```bash
-conda install -c conda-forge -n base conda-build
-conda build recipe
-
-# then, in a fresh environment or after activation:
-conda install --use-local fuzzy-k-mer-counter
-
-# run the installed binary
-fkm_count -h
-```
-
-If you prefer to build from source into a local conda env, the equivalent pattern is:
-
-```bash
-conda create -n fkm python -y
+git clone https://github.com/saskeli/fuzzy_k-mer_counter.git
+cd fuzzy_k-mer_counter
+conda create -n fkm python -y # or use an existing environment
 conda activate fkm
 conda install -c conda-forge cmake make zlib llvm-openmp -y
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -64,11 +53,9 @@ cmake --build build --parallel
 ./build/fkm_count -h
 ```
 
-### Native linux development
+### GNU Make
 
 ```bash
 make count
 ./count -h
 ```
-
-This uses the project’s simple Makefile-based workflow for local development and debugging.
