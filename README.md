@@ -8,18 +8,21 @@ Counts number of occurrences of ${ACGTN}^k$ -mers in fasta file(s).
 Reads fasta file paths and mers from parameters, batch files
 or standard input (if no paths are given) for piping.
 
-Usage: `fkm_count [fasta path] [options] [mers ...]`
+For batch operation, maximum $k$ is 32, unless run with the `-L`
+option for max $k = 64$. For non-batch operation max $k$ is 64.
+
+Usage: `fkm_count [fasta path] [-b file_path] [-r] [-s] [-L] [-t N] [-p path] [mers ...]`
 
 | Parameter | Description |
 |-----------|-------------|
 | `fasta_file` | Path to fasta file (possibly compressed). Needs to be placed before any mer parameters. |
 | `mers ...` | List of mers to search for. |
-| `-b <file_path>` | Reads file containing one `fasta_file` and at least one `mer` per line. Overrides `fasta_file` and `mers`. |
+| `-b file_path` | Reads file containing one fasta_file and at least one mer per line. Overrides `fasta_path` and `mers ...`. |
 | `-r` | Do not include reverse complements for non-palindromic mers. |
 | `-s` | Report at most one match per fasta record. |
 | `-t N` | Set the maximum number of threads. Only runs multithreaded on batch jobs. |
-| `-p <path>` | Prefix path to add to (each) `fasta_file`. |
-| `-h`| Display this message and exit. |
+| `-p path` | Prefix path to add to (each) fasta_file. |
+| `-L` | Extend max $k$ to 64, by sacrificing some performance. |
 
 ## Example
 

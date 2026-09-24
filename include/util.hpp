@@ -1,7 +1,16 @@
+#pragma once
+
 #include <array>
 #include <cstdint>
 
 namespace fkc::internal {
+const static constexpr uint64_t W = 64;
+const static constexpr uint64_t ZERO = 0;
+const static constexpr uint64_t ONE = 1;
+const static constexpr uint64_t TWO = 2;
+const static constexpr uint64_t THIRTYTWO = 32;
+const static constexpr uint64_t SIXTYTWO = 62;
+
 const static constexpr std::array<char, 4> v_to_nuc = {'A', 'C', 'G', 'T'};
 const static constexpr std::array<uint8_t, 256> nuc_to_v = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
